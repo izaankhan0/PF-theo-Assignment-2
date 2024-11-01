@@ -1,14 +1,32 @@
-#include<stdio.h>
-int main(){
-	char slogans[3][20] = {"buy now", "save big", "limited offer"};
-	char current;
-	for (int i = 0; i < 3; i++){
-		printf("For \"%s\":  ", slogans[i]);
-		for (int j = 0; j < sizeof(slogans[i])/sizeof(slogans[i][0]); j++){
-			current = slogans[i][j];
-			printf("%c", current );
-		}
-		printf("\n");
-	}
-	return 0;
+#include <stdio.h>
+#include <string.h>
+
+void countChars(char *slogan) {
+    int repeat[256] = {0};
+    
+    for (int i = 0; slogan[i] != '\0'; i++) {
+        repeat[(char)slogan[i]]++;
+    }
+
+
+    printf("For \"%s\": {", slogan);
+    int first = 1;
+    for (int i = 0; i < 256; i++) {
+        if (repeat[i] > 0) {
+            if (!first) printf(", ");
+            printf("'%c': %d", i, repeat[i]);
+            first = 0;
+        }
+    }
+    printf("}\n");
+}
+
+void main() {
+
+    const char *slogans[] = {"buy now", "save big", "limited offer"};
+    int num_slogans = sizeof(slogans) / sizeof(slogans[0]);
+
+    for (int i = 0; i < num_slogans; i++) {
+        countChars(slogans[i]);
+    }
 }
